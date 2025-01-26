@@ -1,0 +1,267 @@
+
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>My Website</title>
+
+  <!-- Favicon and Icons -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- External Resources -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Vue and Vue Router must be loaded first -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-router@3.5.3/dist/vue-router.js"></script>
+  
+  <style>
+  	.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, and Opera */
+}
+    [v-cloak] { display: none; }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .cta-button {
+      animation: pulse 2s infinite;
+      transition: all 0.3s ease;
+    }
+
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity 0.3s ease;
+    }
+    .fade-enter, .fade-leave-to {
+      opacity: 0;
+    }
+
+    .slide-fade-enter-active {
+      transition: all 0.3s ease-out;
+    }
+    .slide-fade-leave-active {
+      transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+    }
+    .slide-fade-enter-from,
+    .slide-fade-leave-to {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    .slide-right-enter-active {
+      transition: all 0.3s ease-out;
+    }
+    .slide-right-leave-active {
+      transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+    }
+    .slide-right-enter-from {
+      transform: translateX(20px);
+      opacity: 0;
+    }
+    .slide-right-leave-to {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    .shake-enter-active {
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .fa-spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    .modal-success-leave-active {
+      transition: all 0.3s ease-in-out;
+    }
+    .modal-success-leave-to {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+
+    input:focus {
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+    }
+
+    .nav-button {
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-button:active {
+      transform: scale(0.95);
+    }
+
+    .nav-button::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background-color: #3B82F6;
+      transition: width 0.2s ease;
+      border-radius: 2px;
+    }
+
+    .router-link-active::after {
+      width: 24px;
+    }
+
+    .backdrop-blur-lg {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    @media (hover: none) {
+      .nav-button:active {
+        opacity: 0.7;
+      }
+    }
+
+    body {
+      background-color: #0D1B2A;
+      color: white;
+    }
+    
+    .page-transition {
+      animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .error-message { color: #ff4444; }
+    .success-message { color: #00C851; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body class="font-roboto">
+  <div id="app" v-cloak>
+    <app-header v-show="showHeader"></app-header>
+    <div class="p-4 page-transition">
+      <router-view></router-view>
+    </div>
+    <nav-bar v-if="showNavBar"></nav-bar>
+  </div>
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  
+  setInterval(() => {
+    slides[currentSlide].style.opacity = '0';
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].style.opacity = '1';
+  }, 5000);
+});
+</script>
+
+
+<script>
+function switchTab(tabName) {
+    // Hide all tabs
+    document.getElementById('tokens').classList.add('hidden');
+    document.getElementById('transactions').classList.add('hidden');
+    document.getElementById('wins').classList.add('hidden');
+    
+    // Show selected tab
+    document.getElementById(tabName).classList.remove('hidden');
+    
+    // Update button styles
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        if (button.getAttribute('onclick')) {
+            button.classList.remove('bg-blue-500/20');
+            button.classList.add('text-gray-400');
+            button.classList.remove('text-white');
+        }
+    });
+    
+    // Style active button
+    event.target.classList.add('bg-blue-500/20');
+    event.target.classList.remove('text-gray-400');
+    event.target.classList.add('text-white');
+}
+</script>
+
+<script>
+  // Replace with your Supabase project credentials
+  const SUPABASE_URL = 'https://tyczwkikbzkjjtldsyrs.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5Y3p3a2lrYnpramp0bGRzeXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc0Nzk4NDksImV4cCI6MjA1MzA1NTg0OX0.odAIFRpHmxmSJ2gO-0TyhARaNGxQlKXaKktDnvWhHoU';
+
+  // Initialize Supabase
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Example: Test connection by fetching user profiles (modify based on your database structure)
+  async function testSupabase() {
+    const { data, error } = await supabase.from('profiles').select('*');
+    if (error) {
+      console.error('Error fetching profiles:', error);
+    } else {
+      console.log('Profiles:', data);
+    }
+  }
+
+  testSupabase(); // Call the test function to verify connection
+
+
+
+    
+
+  <!-- Components - Load these before app.js -->
+  <script src="components/Header.js"></script>
+  <script src="components/NavBar.js"></script>
+  <script src="components/SignInModal/SignInModal.js"></script>
+  <script src="components/SignUpModal.js"></script>
+  <script src="pages/components/BalanceCard.js"></script>
+  <script src="pages/components/quick-actions.js"></script>
+  <script src="pages/components/Tabs.js"></script>
+
+  <!-- Pages - Load these before app.js -->
+  <script src="pages/Home.js"></script>
+  <script src="pages/Explore.js"></script>
+  <script src="pages/Live.js"></script>
+  <script src="pages/Wallet.js"></script>
+  <script src="pages/Profile.js"></script>
+  <script src="pages/Morpion.js"></script>
+  <script src="pages/tournaments/tournaments.js"></script>
+<script src="pages/tournaments/JoinTournamentButton.js"></script>
+  <!-- Main App - Load this last -->
+  <script src="app.js"></script>
+</body>
+</html>
