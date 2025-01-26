@@ -1,0 +1,73 @@
+<html>
+ <head>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+  </style>
+ </head>
+ <body class="font-roboto bg-gray-100">
+  <div class="page-transition p-4">
+   <h2 class="text-xl font-bold mb-4">
+    Welcome to My Website
+   </h2>
+   <div class="slides overflow-hidden relative w-full h-64">
+    <div class="slider">
+     <div class="slide w-full h-full">
+      <img alt="A beautiful landscape with mountains and a clear sky" class="w-full h-full object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/9QhW6h4JLTYYHVNMDK4iDd74lVxOPRN9dbTRBCm9HgnI2sAF.jpg" width="600"/>
+     </div>
+     <div class="slide w-full h-full">
+      <img alt="A serene beach with golden sand and blue waters" class="w-full h-full object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/5RqdbHujWmaTP9RSEtEouKEzLu1FOftkoHB23vEkXr4QsZBKA.jpg" width="600"/>
+     </div>
+     <div class="slide w-full h-full">
+      <img alt="A bustling cityscape with skyscrapers and busy streets" class="w-full h-full object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/pMqqZVOX6e2tIq8AgSIUx3doHmval0aQudTo3kTfFyhfwmFoA.jpg" width="600"/>
+     </div>
+    </div>
+    <button class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2" onclick="prevSlide()">
+     <i class="fas fa-chevron-left">
+     </i>
+    </button>
+    <button class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2" onclick="nextSlide()">
+     <i class="fas fa-chevron-right">
+     </i>
+    </button>
+   </div>
+   <p class="mt-4">
+    This is the homepage of your website. Use the navigation bar below to explore other sections.
+   </p>
+  </div>
+  <script>
+   let currentSlide = 0;
+
+        function showSlide(index) {
+            const slides = document.querySelector('.slider');
+            const totalSlides = document.querySelectorAll('.slide').length;
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+  </script>
+ </body>
+</html>
